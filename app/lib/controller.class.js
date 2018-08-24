@@ -14,6 +14,8 @@ module.exports = class Controller {
         this.ctx = ctx;
         this.next = next;
 
+        this.body = {};
+
         for (let name in ctx) {
             if (typeof ctx[name] !== 'function') {
                 Object.defineProperty(this, name, {
@@ -88,22 +90,13 @@ module.exports = class Controller {
 
         switch (arguments.length) {
             case 1:
-                body = {
-                    data: data,
-                }
+                body = Object.assign({data: data}, this.body);
                 break;
             case 2:
-                body = {
-                    data: data,
-                    msg: msg,
-                }
+                body = Object.assign({data: data, msg: msg}, this.body);
                 break;
             case 3:
-                body = {
-                    data: data,
-                    msg: msg,
-                    code: code
-                }
+                body = Object.assign({data: data, msg: msg, code: code}, this.body);
                 break;
         }
 
