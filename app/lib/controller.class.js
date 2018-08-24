@@ -14,7 +14,7 @@ module.exports = class Controller {
         this.ctx = ctx;
         this.next = next;
 
-        this.body = {};
+        this._defaultBody = {};
 
         for (let name in ctx) {
             if (typeof ctx[name] !== 'function') {
@@ -50,6 +50,14 @@ module.exports = class Controller {
 
     get config() {
         return koahub.config;
+    }
+
+    get defaultBody() {
+        return this._defaultBody;
+    }
+
+    set defaultBody(body) {
+        this._defaultBody = body;
     }
 
     isGet() {
@@ -90,13 +98,13 @@ module.exports = class Controller {
 
         switch (arguments.length) {
             case 1:
-                body = Object.assign({data: data}, this.body);
+                body = Object.assign({data: data}, this._defaultBody);
                 break;
             case 2:
-                body = Object.assign({data: data, msg: msg}, this.body);
+                body = Object.assign({data: data, msg: msg}, this._defaultBody);
                 break;
             case 3:
-                body = Object.assign({data: data, msg: msg, code: code}, this.body);
+                body = Object.assign({data: data, msg: msg, code: code}, this._defaultBody);
                 break;
         }
 
